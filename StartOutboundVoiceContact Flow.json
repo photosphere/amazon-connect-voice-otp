@@ -1,0 +1,386 @@
+{
+  "Version": "2019-10-30",
+  "StartAction": "9df9edbb-83ff-42bf-8bac-35353b0de924",
+  "Metadata": {
+    "entryPointPosition": {
+      "x": -245.6,
+      "y": 9.6
+    },
+    "ActionMetadata": {
+      "9df9edbb-83ff-42bf-8bac-35353b0de924": {
+        "position": {
+          "x": -93.6,
+          "y": 0
+        }
+      },
+      "4a58c60b-dfa7-4540-845f-215520b92d68": {
+        "position": {
+          "x": 181.6,
+          "y": -27.2
+        }
+      },
+      "87d3854b-9525-4a1f-9c07-fc44d1715024": {
+        "position": {
+          "x": 468.8,
+          "y": -3.2
+        },
+        "overrideConsoleVoice": true
+      },
+      "f2d8e95d-1577-419e-8405-47e1da4146f6": {
+        "position": {
+          "x": -79.2,
+          "y": 178.4
+        },
+        "parameters": {
+          "Attributes": {
+            "WarningMessage": {
+              "useDynamic": true
+            },
+            "Language": {
+              "useDynamic": true
+            }
+          }
+        },
+        "dynamicParams": [
+          "WarningMessage",
+          "Language"
+        ]
+      },
+      "e1464657-4670-4a40-afed-2ebfeb8173d3": {
+        "position": {
+          "x": 192.8,
+          "y": 176.8
+        },
+        "conditions": [],
+        "conditionMetadata": [
+          {
+            "id": "08740395-42f6-4af5-800f-fcae6070d86c",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "EN"
+          },
+          {
+            "id": "49cbdfd1-5a92-4686-8b30-e6978e284b48",
+            "operator": {
+              "name": "Equals",
+              "value": "Equals",
+              "shortDisplay": "="
+            },
+            "value": "ZH"
+          }
+        ]
+      },
+      "d4229d29-8027-487b-990d-ee3e27f757f8": {
+        "position": {
+          "x": 439.2,
+          "y": 193.6
+        },
+        "overrideConsoleVoice": true
+      },
+      "8d91563b-5dc6-43c4-ab47-b940251aa11a": {
+        "position": {
+          "x": 433.6,
+          "y": 364.8
+        },
+        "overrideConsoleVoice": true
+      },
+      "75c00855-31b3-480a-bac8-dd27e5fb71f9": {
+        "position": {
+          "x": -49.6,
+          "y": 507.2
+        }
+      },
+      "681f510c-6c45-446d-9500-3c881125e295": {
+        "position": {
+          "x": 711.2,
+          "y": 364
+        }
+      },
+      "ff374a8c-15ec-4965-be2d-c1679b6e5435": {
+        "position": {
+          "x": 713.6,
+          "y": 103.2
+        },
+        "parameters": {
+          "SSML": {
+            "useDynamic": true
+          }
+        },
+        "useDynamic": true
+      },
+      "054cfb54-42e1-4397-9e81-54df67106891": {
+        "position": {
+          "x": 443.2,
+          "y": 580.8
+        }
+      },
+      "2ce12cf7-d4bf-4749-806e-26d2dce5b1af": {
+        "position": {
+          "x": 1014.4,
+          "y": 100.8
+        },
+        "conditionMetadata": [
+          {
+            "id": "a875538d-df12-4fd6-816f-55840f117587",
+            "value": "1"
+          }
+        ]
+      },
+      "4304c9b9-2515-4bcc-9ee9-f507691fcd07": {
+        "position": {
+          "x": 1308.8,
+          "y": 164.8
+        }
+      }
+    },
+    "Annotations": [],
+    "name": "StartOutboundVoiceContact Flow",
+    "description": "定制WarningMessage内容通知",
+    "type": "contactFlow",
+    "status": "PUBLISHED",
+    "hash": {}
+  },
+  "Actions": [
+    {
+      "Parameters": {
+        "FlowLoggingBehavior": "Enabled"
+      },
+      "Identifier": "9df9edbb-83ff-42bf-8bac-35353b0de924",
+      "Type": "UpdateFlowLoggingBehavior",
+      "Transitions": {
+        "NextAction": "4a58c60b-dfa7-4540-845f-215520b92d68"
+      }
+    },
+    {
+      "Parameters": {
+        "RecordingBehavior": {
+          "RecordedParticipants": [
+            "Agent",
+            "Customer"
+          ]
+        }
+      },
+      "Identifier": "4a58c60b-dfa7-4540-845f-215520b92d68",
+      "Type": "UpdateContactRecordingBehavior",
+      "Transitions": {
+        "NextAction": "87d3854b-9525-4a1f-9c07-fc44d1715024"
+      }
+    },
+    {
+      "Parameters": {
+        "TextToSpeechVoice": "Zhiyu",
+        "TextToSpeechEngine": "Neural",
+        "TextToSpeechStyle": "None"
+      },
+      "Identifier": "87d3854b-9525-4a1f-9c07-fc44d1715024",
+      "Type": "UpdateContactTextToSpeechVoice",
+      "Transitions": {
+        "NextAction": "f2d8e95d-1577-419e-8405-47e1da4146f6"
+      }
+    },
+    {
+      "Parameters": {
+        "Attributes": {
+          "WarningMessage": "$.Attributes.WarningMessage",
+          "Language": "$.Attributes.Language"
+        },
+        "TargetContact": "Current"
+      },
+      "Identifier": "f2d8e95d-1577-419e-8405-47e1da4146f6",
+      "Type": "UpdateContactAttributes",
+      "Transitions": {
+        "NextAction": "e1464657-4670-4a40-afed-2ebfeb8173d3",
+        "Errors": [
+          {
+            "NextAction": "e1464657-4670-4a40-afed-2ebfeb8173d3",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "ComparisonValue": "$.Attributes.Language"
+      },
+      "Identifier": "e1464657-4670-4a40-afed-2ebfeb8173d3",
+      "Type": "Compare",
+      "Transitions": {
+        "NextAction": "d4229d29-8027-487b-990d-ee3e27f757f8",
+        "Conditions": [
+          {
+            "NextAction": "d4229d29-8027-487b-990d-ee3e27f757f8",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "EN"
+              ]
+            }
+          },
+          {
+            "NextAction": "8d91563b-5dc6-43c4-ab47-b940251aa11a",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "ZH"
+              ]
+            }
+          }
+        ],
+        "Errors": [
+          {
+            "NextAction": "d4229d29-8027-487b-990d-ee3e27f757f8",
+            "ErrorType": "NoMatchingCondition"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "TextToSpeechEngine": "Neural",
+        "TextToSpeechStyle": "None",
+        "TextToSpeechVoice": "Danielle"
+      },
+      "Identifier": "d4229d29-8027-487b-990d-ee3e27f757f8",
+      "Type": "UpdateContactTextToSpeechVoice",
+      "Transitions": {
+        "NextAction": "75c00855-31b3-480a-bac8-dd27e5fb71f9"
+      }
+    },
+    {
+      "Parameters": {
+        "TextToSpeechVoice": "Zhiyu",
+        "TextToSpeechEngine": "Neural",
+        "TextToSpeechStyle": "None"
+      },
+      "Identifier": "8d91563b-5dc6-43c4-ab47-b940251aa11a",
+      "Type": "UpdateContactTextToSpeechVoice",
+      "Transitions": {
+        "NextAction": "75c00855-31b3-480a-bac8-dd27e5fb71f9"
+      }
+    },
+    {
+      "Parameters": {
+        "SSML": "<speak><break time=\"3s\"/></speak>"
+      },
+      "Identifier": "75c00855-31b3-480a-bac8-dd27e5fb71f9",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "054cfb54-42e1-4397-9e81-54df67106891",
+        "Errors": [
+          {
+            "NextAction": "054cfb54-42e1-4397-9e81-54df67106891",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "SSML": "<speak><break time=\"1s\"/></speak>"
+      },
+      "Identifier": "681f510c-6c45-446d-9500-3c881125e295",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "054cfb54-42e1-4397-9e81-54df67106891",
+        "Errors": [
+          {
+            "NextAction": "054cfb54-42e1-4397-9e81-54df67106891",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "SSML": "$.Attributes.WarningMessage"
+      },
+      "Identifier": "ff374a8c-15ec-4965-be2d-c1679b6e5435",
+      "Type": "MessageParticipant",
+      "Transitions": {
+        "NextAction": "681f510c-6c45-446d-9500-3c881125e295",
+        "Errors": [
+          {
+            "NextAction": "2ce12cf7-d4bf-4749-806e-26d2dce5b1af",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "LoopCount": "2"
+      },
+      "Identifier": "054cfb54-42e1-4397-9e81-54df67106891",
+      "Type": "Loop",
+      "Transitions": {
+        "NextAction": "2ce12cf7-d4bf-4749-806e-26d2dce5b1af",
+        "Conditions": [
+          {
+            "NextAction": "ff374a8c-15ec-4965-be2d-c1679b6e5435",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "ContinueLooping"
+              ]
+            }
+          },
+          {
+            "NextAction": "2ce12cf7-d4bf-4749-806e-26d2dce5b1af",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "DoneLooping"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {
+        "StoreInput": "False",
+        "InputTimeLimitSeconds": "60",
+        "Text": "如需重复收听，请按1。结束请挂机。"
+      },
+      "Identifier": "2ce12cf7-d4bf-4749-806e-26d2dce5b1af",
+      "Type": "GetParticipantInput",
+      "Transitions": {
+        "NextAction": "4304c9b9-2515-4bcc-9ee9-f507691fcd07",
+        "Conditions": [
+          {
+            "NextAction": "ff374a8c-15ec-4965-be2d-c1679b6e5435",
+            "Condition": {
+              "Operator": "Equals",
+              "Operands": [
+                "1"
+              ]
+            }
+          }
+        ],
+        "Errors": [
+          {
+            "NextAction": "4304c9b9-2515-4bcc-9ee9-f507691fcd07",
+            "ErrorType": "InputTimeLimitExceeded"
+          },
+          {
+            "NextAction": "4304c9b9-2515-4bcc-9ee9-f507691fcd07",
+            "ErrorType": "NoMatchingCondition"
+          },
+          {
+            "NextAction": "4304c9b9-2515-4bcc-9ee9-f507691fcd07",
+            "ErrorType": "NoMatchingError"
+          }
+        ]
+      }
+    },
+    {
+      "Parameters": {},
+      "Identifier": "4304c9b9-2515-4bcc-9ee9-f507691fcd07",
+      "Type": "DisconnectParticipant",
+      "Transitions": {}
+    }
+  ]
+}
