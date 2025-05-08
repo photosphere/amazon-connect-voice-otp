@@ -3,6 +3,10 @@ import time
 import random
 import string
 import boto3
+from datetime import datetime
+
+# 初始化页面配置
+st.set_page_config(page_title="语音验证码Demo", page_icon="🔊")
 
 connect_client = boto3.client("connect")
 
@@ -13,6 +17,7 @@ st.title("语音验证码Demo")
 def generate_otp(length=6):
     """生成指定长度的数字验证码"""
     return ''.join(random.choices(string.digits, k=length))
+
 # 发起一个外呼语音电话
 def start_outbound_voice_call(
     phone_number,
@@ -29,7 +34,6 @@ def start_outbound_voice_call(
         otp_msg="<speak><break time='1s'/>您的语音将验证码是<prosody rate='slow'><say-as interpret-as='digits'>"+otp_code+"</say-as></prosody></speak>"
         attributes = {'WarningMessage':otp_msg,"Language":'ZH'}
        
-            
         # 添加验证码到属性中，以便在 Contact Flow 中使用
         attributes['otpCode'] = otp_code
         
@@ -55,6 +59,22 @@ def start_outbound_voice_call(
         print(f"发生未预期的错误: {str(e)}")
         raise
 
+# 初始化会话状态
+if 'countdown_active' not in st.session_state:
+    st.session_state.countdown_active = False
+    
+if 'countdown_time' not in st.session_state:
+    st.session_state.countdown_time = 60
+    
+if 'start_time' not in st.session_state:
+    st.session_state.start_time = 0
+
+# 检查倒计时是否已经结束
+if st.session_state.countdown_active:
+    elapsed = time.time() - st.session_state.start_time
+    if elapsed >= st.session_state.countdown_time:
+        st.session_state.countdown_active = False
+
 # 创建表单
 with st.form("otp_form"):
     # 手机号码输入
@@ -77,17 +97,13 @@ with st.form("otp_form"):
 if 'show_otp' in st.session_state and st.session_state.show_otp:
     st.success(f"为手机号 {st.session_state.phone} 生成的验证码: {st.session_state.otp}")
     
-    # 初始化计时器状态
-    if 'countdown_active' not in st.session_state:
-        st.session_state.countdown_active = False
-        st.session_state.countdown_time = 60
-    
     # 创建列来放置按钮和倒计时
     col1, col2 = st.columns([1, 2])
     
     # 语音发送按钮
     with col1:
-        if st.button("语音发送验证码", disabled=st.session_state.countdown_active):
+        button_disabled = st.session_state.countdown_active
+        if st.button("语音发送验证码", disabled=button_disabled, key="voice_button"):
             st.session_state.countdown_active = True
             st.session_state.countdown_time = 60
             st.session_state.start_time = time.time()
@@ -95,8 +111,15 @@ if 'show_otp' in st.session_state and st.session_state.show_otp:
             # 模拟发送验证码
             st.toast(f"正在通过语音将验证码 {st.session_state.otp} 发送至 {st.session_state.phone}")
             
-            # 
-            start_outbound_voice_call(st.session_state.phone, st.session_state.otp,'b7e4b4ed-1bdf-4b14-b624-d9328f08725a','f405040b-7b51-43c9-8d94-7c5743f136a3','+13072633584')
+            # 发起语音通话
+            start_outbound_voice_call(
+                st.session_state.phone, 
+                st.session_state.otp,
+                'b7e4b4ed-1bdf-4b14-b624-d9328f08725a',
+                'f405040b-7b51-43c9-8d94-7c5743f136a3',
+                '+13072633584'
+            )
+            st.experimental_rerun()
     
     # 显示倒计时
     with col2:
@@ -107,8 +130,14 @@ if 'show_otp' in st.session_state and st.session_state.show_otp:
             
             if remaining > 0:
                 st.write(f"请等待 {remaining} 秒后重新发送")
+                time.sleep(0.5)  # 短暂延迟以减少刷新频率
+                st.experimental_rerun()
             else:
                 st.session_state.countdown_active = False
+                st.write("可以重新发送验证码")
+                st.experimental_rerun()  # 确保按钮状态更新
+        elif 'start_time' in st.session_state and time.time() - st.session_state.start_time > st.session_state.countdown_time:
+            st.write("可以重新发送验证码")
 
 # 添加重置功能
 if 'show_otp' in st.session_state and st.session_state.show_otp:
@@ -116,9 +145,4 @@ if 'show_otp' in st.session_state and st.session_state.show_otp:
         for key in ['otp', 'phone', 'show_otp', 'countdown_active', 'countdown_time', 'start_time']:
             if key in st.session_state:
                 del st.session_state[key]
-
-# 自动刷新以更新倒计时
-if 'countdown_active' in st.session_state and st.session_state.countdown_active:
-    elapsed = time.time() - st.session_state.start_time
-    if elapsed >= st.session_state.countdown_time:
-        st.session_state.countdown_active = False
+        st.experimental_rerun()
