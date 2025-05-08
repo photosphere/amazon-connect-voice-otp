@@ -119,7 +119,7 @@ if 'show_otp' in st.session_state and st.session_state.show_otp:
                 'f405040b-7b51-43c9-8d94-7c5743f136a3',
                 '+13072633584'
             )
-            st.experimental_rerun()
+            st.rerun()
     
     # 显示倒计时
     with col2:
@@ -131,11 +131,11 @@ if 'show_otp' in st.session_state and st.session_state.show_otp:
             if remaining > 0:
                 st.write(f"请等待 {remaining} 秒后重新发送")
                 time.sleep(0.5)  # 短暂延迟以减少刷新频率
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.session_state.countdown_active = False
                 st.write("可以重新发送验证码")
-                st.experimental_rerun()  # 确保按钮状态更新
+                st.rerun()  # 确保按钮状态更新
         elif 'start_time' in st.session_state and time.time() - st.session_state.start_time > st.session_state.countdown_time:
             st.write("可以重新发送验证码")
 
@@ -145,4 +145,4 @@ if 'show_otp' in st.session_state and st.session_state.show_otp:
         for key in ['otp', 'phone', 'show_otp', 'countdown_active', 'countdown_time', 'start_time']:
             if key in st.session_state:
                 del st.session_state[key]
-        st.experimental_rerun()
+        st.rerun()
